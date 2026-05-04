@@ -3,7 +3,7 @@ import { Search, Star, Trash2, CloudSun, Wind, Droplets } from "lucide-react";
 import { createRoot } from "react-dom/client";
 import "./style.css";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "";
 
 function App() {
   const [city, setCity] = useState("Los Angeles");
