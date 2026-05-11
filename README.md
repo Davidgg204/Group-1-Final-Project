@@ -1,10 +1,10 @@
 # Group-1-Final-Project
-##Group Members:
--David Gomez
--Enrique Cayetano
--Saw Rustom Dee
--Andres Renteria
--Alejandro Villanueva
+# Group Members
+- David Gomez
+- Enrique Cayetano
+- Saw Rustom Dee
+- Andres Renteria
+- Alejandro Villanueva
 
 # Group 1 Final Project Weather App
 
