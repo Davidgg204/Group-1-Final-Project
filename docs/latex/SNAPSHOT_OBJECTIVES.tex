@@ -1,0 +1,39 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+
+\title{Snapshot Objectives\\Group 1 Weather App}
+\author{Team Members: David Gomez, Enrique Cayetano, Saw Rustom Dee, Andres Renteria, Alejandro Villanueva}
+\date{04/22/2026}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Snapshot 1}
+The initial snapshot focused on project planning and setup of our Group 1 Weather App.
+During this phase, we selected the technologies and frameworks that would be used throughout development, including React for the frontend, Node.js and Express for the backend, Docker for containerization, and Render for cloud deployment. 
+The GitHub repository was created and organized with separate frontend and backend directories. Initial frontend and backend project structures were implemented, along with package installation and dependency setup. The team also discussed application requirements, project objectives, workflow planning, and task delegation among team members.
+Additionally, early UI design ideas and API integration planning were discussed in preparation for future snapshots.
+
+\section{Snapshot 2}
+The second snapshot focuses on implementing the core functionality of the application. During this phase, the Open-Meteo API was integrated into the back end service to retrieve real time weather and forecast data based on user input.
+The front end search functionality was connected to the backend API routes allowing users to search for valid cities and view current weather conditions along with a five day forecast. Error handling was also added to properly manage invalid city searches and API failures. 
+TestRail test cases and test runs were created for the newly implemented search and forecast features. Additionally, dependencies in libraries required for API communication at frontend rendering were also configured.
+
+\section{Snapshot 3}
+The third snapshot focused on expanding the applications features and improving user interaction. A favorite system was implemented, allowing users to save and remove searched cities.
+A search history feature was also added to improve usability in user experience. Frontend interface improvements were made to better organize weather information and user controls. 
+Testing was performed using TestRail to validate the favorites functionality, history tracking and frontend behavior.
+
+\section{Snapshot 4}
+This final snapshot is focusing on deployment, testing, optimization, and project finalization. Doctor containerization was completed for both the frontend and backend services using docker files and docker-compose configuration.
+The application was successfully deployed online using the render cloud hosting service. Final testing was conducted using TestRail to Verify frontend/backend communication, deployment stability and overall system reliability.
+
+\end{document}

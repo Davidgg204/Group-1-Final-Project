@@ -1,0 +1,121 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\title{Group 1 Weather App\\User Manual}
+\author{Team Members: David Gomez, Enrique Cayetano, Saw Rustom Dee, Andres Renteria, Alejandro Villanueva}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+
+The Group 1 Weather App is a full-stack weather web application that provides the user with real-time weather information and a 5-day forecast using the Open-Meteo API. The application was developed using React for the frontend and Node.js with Express for the backend. The project also utilizes Docker for containerization and Render for cloud deployment.
+
+\section{Project Objectives}
+
+The primary objective of the Group 1 Weather App is to provide users with a simple and responsive weather application that allows them to search for cities, view weather forecasts, save favorite locations, and access recent search history. The project also demonstrates modern software engineering practices such as full-stack development, Docker containerization, cloud deployment, testing with TestRail, and project management using Jira.
+
+\section{Purpose of the Project}
+
+Weather applications are commonly used in everyday life to help users plan travel, outdoor activities, and daily schedules. The Group 1 Weather App was created to provide a lightweight and accessible weather platform.
+
+\section{Technologies Used}
+
+\begin{itemize}
+    \item React
+    \item Vite
+    \item Node.js
+    \item Express.js
+    \item Open-Meteo API
+    \item Docker
+    \item Render
+    \item GitHub
+    \item Jira
+    \item TestRail
+    \item LaTeX
+\end{itemize}
+
+\section{Application Features}
+
+\begin{itemize}
+    \item Search weather by city
+    \item Display current weather information
+    \item Display 5-day forecast
+    \item Save favorite cities
+    \item Remove favorite cities
+    \item Store recent search history
+    \item Responsive user interface
+\end{itemize}
+
+\section{Accessing the Application}
+
+The application is deployed online using Render and can be accessed through the following link:
+
+\textbf{https://group-1-final-project.onrender.com}
+
+\section{Running the Application Locally}
+
+\subsection{Frontend and Backend}
+
+Open two terminals and run the following commands:
+
+\subsubsection*{Frontend}
+
+\begin{verbatim}
+cd frontend
+npm install
+npm run dev
+\end{verbatim}
+
+\subsubsection*{Backend}
+
+\begin{verbatim}
+cd backend
+npm install
+npm start
+\end{verbatim}
+
+\section{Docker Instructions}
+
+The application can also be started using Docker Compose.
+
+\begin{verbatim}
+docker compose up --build
+\end{verbatim}
+
+After the containers start successfully, open:
+
+\begin{verbatim}
+http://localhost:5173
+\end{verbatim}
+
+\section{Jira Project Management}
+
+Jira was used to organize tasks, assign responsibilities, and track project progress throughout development.
+
+\textbf{https://finalgroup1project.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJpIjoiYTMzMTdkZGI1ZTZmNGIxMDgxYWJjZjUzMzRmZmE5YmQiLCJwIjoiaiJ9}
+
+\section{Testing}
+
+The application was tested using TestRail. Test cases and reports were created for Snapshots 2, 3, and 4, along with final system testing. Testing included frontend functionality, backend communication, deployment validation, Docker startup testing, and error handling.
+
+\section{Future Improvements}
+
+Future improvements may include:
+\begin{itemize}
+    \item Weather maps
+    \item Advanced charts and analytics
+    \item Push notifications
+    \item Additional weather APIs
+\end{itemize}
+
+\end{document}
