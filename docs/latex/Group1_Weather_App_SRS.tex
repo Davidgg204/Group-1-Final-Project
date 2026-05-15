@@ -1,0 +1,488 @@
+\documentclass[11pt,letterpaper]{article}
+
+%% ---------- Encoding ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+%% ---------- Page geometry ----------
+\usepackage[letterpaper,top=0.85in,bottom=1in,left=0.85in,right=0.85in,headheight=14pt]{geometry}
+
+%% ---------- Fonts ----------
+\usepackage{lmodern}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[scaled=0.92]{inconsolata}
+
+%% ---------- Colors ----------
+\usepackage[table]{xcolor}
+\definecolor{brandNavy}{HTML}{0B3A6B}
+\definecolor{brandBlue}{HTML}{1F6FB2}
+\definecolor{brandSky}{HTML}{5AA8E0}
+\definecolor{brandLight}{HTML}{F4F7FB}
+\definecolor{brandBorder}{HTML}{D8D8D8}
+\definecolor{brandRowAlt}{HTML}{F4F7FB}
+\definecolor{brandText}{HTML}{1A1A1A}
+\definecolor{brandMuted}{HTML}{555555}
+\definecolor{brandCodeBg}{HTML}{F5F7FA}
+\definecolor{brandCodeRule}{HTML}{D8E1EB}
+
+%% ---------- Packages ----------
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,backgrounds,fit}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins,listings}
+\usepackage{lastpage}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+
+%% ---------- Hyperref ----------
+\hypersetup{
+  colorlinks=true,
+  linkcolor=brandBlue,
+  urlcolor=brandBlue,
+  citecolor=brandBlue
+}
+
+%% ---------- Section styling ----------
+\titleformat{\section}
+  {\color{brandNavy}\sffamily\Large\bfseries}
+  {\thesection.}{0.6em}{}
+  [\vspace{2pt}{\color{brandBlue}\titlerule[2.5pt]}]
+
+\titleformat{\subsection}
+  {\color{brandBlue}\sffamily\large\bfseries}
+  {\thesubsection}{0.55em}{}
+
+\titleformat{\subsubsection}
+  {\color{brandNavy}\sffamily\normalsize\bfseries}
+  {\thesubsubsection}{0.55em}{}
+
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+\titlespacing*{\subsection}{0pt}{12pt}{4pt}
+\titlespacing*{\subsubsection}{0pt}{8pt}{2pt}
+
+%% ---------- Page header / footer ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\small\color{brandMuted}\thepage\ /\ \pageref{LastPage}}
+\fancyhead[R]{\small\color{brandMuted}\docrunningtitle}
+
+\fancypagestyle{plaincover}{%
+  \fancyhf{}\renewcommand{\headrulewidth}{0pt}}
+
+%% ---------- Lists ----------
+\setlist[itemize]{leftmargin=1.4em,itemsep=2pt,topsep=4pt}
+
+%% ---------- Tables ----------
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\renewcommand{\arraystretch}{1.25}
+\setlength{\arrayrulewidth}{0.4pt}
+\arrayrulecolor{brandBorder}
+
+\newcommand{\thead}[1]{\textcolor{white}{\bfseries #1}}
+
+%% ---------- Code block ----------
+\usepackage{listings}
+\lstdefinestyle{plain}{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  upquote=true,
+  literate={->}{{$\rightarrow$}}1 {<-}{{$\leftarrow$}}1,
+}
+\lstset{style=plain}
+\newtcblisting{codeblock}{
+  enhanced, breakable,
+  colback=brandCodeBg,
+  colframe=brandCodeRule,
+  boxrule=0.4pt,
+  arc=2pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  borderline west={2pt}{0pt}{brandBlue},
+  before skip=8pt, after skip=8pt,
+  listing only,
+  listing options={style=plain},
+}
+
+%% ---------- Caption styling ----------
+\captionsetup{
+  font={small,it,color=brandMuted},
+  labelfont={bf,color=brandNavy},
+  labelsep=endash,
+  skip=4pt
+}
+
+%% ---------- TOC styling ----------
+\renewcommand{\cftsecfont}{\sffamily\bfseries\color{brandNavy}}
+\renewcommand{\cftsecpagefont}{\sffamily\bfseries\color{brandNavy}}
+\renewcommand{\cftsubsecfont}{\sffamily\color{brandText}}
+\renewcommand{\cftsubsecpagefont}{\sffamily\color{brandMuted}}
+\setlength{\cftbeforesecskip}{6pt}
+\setlength{\cftbeforesubsecskip}{2pt}
+\renewcommand{\contentsname}{\color{brandNavy}\sffamily Table of Contents}
+
+%% ---------- TikZ defaults ----------
+\tikzset{
+  >={Latex[length=2.4mm,width=2mm]},
+  every picture/.append style={font=\sffamily},
+  box/.style={rectangle,rounded corners=4pt,draw=brandBlue,fill=white,inner sep=6pt,align=center},
+  boxdark/.style={rectangle,rounded corners=4pt,fill=brandNavy,text=white,inner sep=5pt,align=center,font=\bfseries\small},
+  boxblue/.style={rectangle,rounded corners=4pt,fill=brandBlue,text=white,inner sep=5pt,align=center,font=\bfseries\small},
+  boxsky/.style={rectangle,rounded corners=4pt,fill=brandSky,text=white,inner sep=5pt,align=center,font=\bfseries\small},
+  boxlight/.style={rectangle,rounded corners=4pt,draw=brandBlue,fill=brandLight,inner sep=5pt,align=center},
+  process/.style={circle,draw=brandBlue,fill=white,thick,inner sep=1pt,align=center,minimum size=18mm,font=\scriptsize},
+  store/.style={rectangle,draw=brandNavy,thick,fill=white,minimum height=9mm,inner sep=3pt,align=center,font=\small},
+  flowarrow/.style={->,draw=brandBlue,thick},
+  bidirarrow/.style={<->,draw=brandBlue,thick},
+  graylabel/.style={font=\scriptsize\itshape,text=brandMuted},
+  bluelabel/.style={font=\scriptsize\bfseries,text=brandNavy},
+}
+
+\newcommand{\docrunningtitle}{Group 1 Weather App --- SRS}
+
+\begin{document}
+
+
+\begin{titlepage}
+\thispagestyle{plaincover}
+\begin{tikzpicture}[remember picture, overlay]
+  %% Full-bleed gradient background
+  \shade[top color=brandNavy, bottom color=brandSky]
+    (current page.north west) rectangle (current page.south east);
+
+  %% Top text block
+  \node[anchor=north west, text=white, inner sep=0pt]
+    at ([xshift=0.95in, yshift=-1.4in]current page.north west) {%
+    \begin{minipage}{5.5in}\raggedright%
+      {\fontsize{11}{14}\selectfont \MakeUppercase{Software Requirement Specification}}\\[26pt]
+      {\fontsize{40}{46}\selectfont\bfseries Group 1\\Weather App}\par
+      \vspace{14pt}
+      \textcolor{white!90}{\rule{0.8in}{3pt}}\par
+      \vspace{18pt}
+      {\fontsize{15}{20}\selectfont Real-time weather information and 5-day forecast web application built with React, Node.js, Express, and the Open-Meteo API.}
+    \end{minipage}};
+
+  %% Metadata block
+  \node[anchor=south west, text=white, inner sep=0pt]
+    at ([xshift=0.95in, yshift=1.6in]current page.south west) {%
+    \begin{minipage}{6in}%
+      \begin{tabular}{@{}p{2.5in}p{2.5in}@{}}
+        {\fontsize{8.5}{10}\selectfont VERSION}        & {\fontsize{8.5}{10}\selectfont DATE} \\[-4pt]
+        {\fontsize{12}{14}\selectfont\bfseries 1.0}    & {\fontsize{12}{14}\selectfont\bfseries May 2026} \\[10pt]
+        {\fontsize{8.5}{10}\selectfont PREPARED BY}    & {\fontsize{8.5}{10}\selectfont DEPLOYMENT} \\[-4pt]
+        {\fontsize{12}{14}\selectfont\bfseries Group 1}& {\fontsize{12}{14}\selectfont\bfseries Render Cloud} \\
+      \end{tabular}\par\vspace{14pt}
+      {\fontsize{8.5}{10}\selectfont TEAM MEMBERS}\par\vspace{4pt}
+      {\fontsize{10.5}{15}\selectfont%
+        David Gomez \enskip\textbullet\enskip Enrique Cayetano \enskip\textbullet\enskip Saw Rustom Dee\\
+        Andres Renteria \enskip\textbullet\enskip Alejandro Villanueva \enskip\textbullet\enskip Jesus Miranda}
+    \end{minipage}};
+\end{tikzpicture}
+\end{titlepage}
+\clearpage
+
+
+%% ---------- Table of Contents ----------
+\tableofcontents
+\clearpage
+
+%% ============================================================
+\section{Introduction}
+
+\subsection{Purpose}
+This Software Requirement Specification (SRS) document defines the functional and nonfunctional requirements for the Group~1 Weather App. It describes the intended system behavior, user interactions, external interfaces, data requirements, and constraints that govern the application. The purpose of this document is to provide a complete and unambiguous reference that the development team, instructor, and end users can use to understand exactly what the system is expected to do.
+
+\subsection{Intended Audience}
+This document is intended for multiple audiences involved in the development, evaluation, and use of the Group~1 Weather App. \emph{Developers} will use it to understand which features must be implemented, how the frontend and backend should communicate, and what external services must be integrated. The \emph{instructor} will use it to evaluate whether the delivered system satisfies the agreed requirements. \emph{End users} may also refer to the document to gain a general understanding of the application's capabilities and the conditions under which it operates.
+
+\subsection{Product Scope}
+The Group~1 Weather App is a full-stack, browser-based weather application that delivers real-time weather information and a five-day forecast for any user-specified city. The system is built on a React frontend, a Node.js and Express backend, and the public Open-Meteo API for geocoding and weather data. The product allows users to:
+\begin{itemize}
+  \item Search for the current weather of any city in the world.
+  \item View a clear, formatted five-day weather forecast.
+  \item Save cities of interest as favorites for one-click access.
+  \item Remove favorites that are no longer needed.
+  \item Review a list of recently searched cities.
+  \item Access the system from desktop and mobile browsers.
+\end{itemize}
+The application is containerized with Docker and deployed publicly through Render at \texttt{https://group-1-final-project.onrender.com}. The product does not require user registration or login, and it does not store personally identifiable information.
+
+\subsection{Definitions, Acronyms, and Abbreviations}
+\begin{tabularx}{\linewidth}{| L{1.2in} | Y |}
+\hline
+\rowcolor{brandNavy}\thead{Term} & \thead{Definition} \\
+\hline
+API & Application Programming Interface. A defined contract for software components to exchange data. \\ \hline
+\rowcolor{brandRowAlt}SRS & Software Requirement Specification. The document you are currently reading. \\ \hline
+REST & Representational State Transfer. The HTTP-based architectural style used for the backend API. \\ \hline
+\rowcolor{brandRowAlt}JSON & JavaScript Object Notation. The data format used for all client--server communication. \\ \hline
+Open-Meteo & Free public weather API that provides geocoding and forecast data. \\ \hline
+\rowcolor{brandRowAlt}UI & User Interface. \\ \hline
+UX & User Experience. \\ \hline
+\rowcolor{brandRowAlt}CORS & Cross-Origin Resource Sharing. The browser policy enabled on the backend to allow frontend requests. \\ \hline
+SPA & Single Page Application. The pattern used by the React frontend. \\ \hline
+\end{tabularx}
+
+%% ============================================================
+\section{Overall Description}
+
+\subsection{System Perspective}
+The Group~1 Weather App is a standalone, full-stack web application built with the following technology stack:
+\begin{itemize}
+  \item React 18 + Vite for the frontend single-page application.
+  \item Node.js with Express 4 for the backend REST API.
+  \item Open-Meteo public APIs for geocoding and weather data.
+  \item Docker and Docker Compose for containerization.
+  \item Render for cloud deployment.
+\end{itemize}
+The system follows a classic client--server architecture. The React frontend renders the user interface and issues HTTP requests to the Express backend, which in turn calls Open-Meteo on behalf of the user and transforms the raw response into a simplified JSON payload before returning it. Search history and favorites are maintained in server memory and exposed through dedicated REST endpoints.
+
+\subsection{Product Functions}
+The system shall provide the following high-level functions:
+\begin{itemize}
+  \item Search for weather information by city name.
+  \item Display the current temperature, humidity, wind speed, and condition for the requested city.
+  \item Display a five-day forecast including maximum and minimum temperatures, condition, and precipitation probability.
+  \item Allow the user to save a displayed city to a favorites list.
+  \item Allow the user to remove a city from the favorites list.
+  \item Allow the user to re-fetch the weather for any saved favorite by selecting it.
+  \item Maintain a most-recent search history of up to ten cities.
+  \item Display user-friendly error messages when a city is not found or the upstream API fails.
+\end{itemize}
+
+\subsection{User Classes}
+The Group~1 Weather App has a single primary user class: the \emph{general user}. The general user is any individual with a modern web browser and an internet connection who wishes to look up weather information. No registration, authentication, or special permission is required to access any feature. Because the application is publicly available, all users share the same set of capabilities and the same in-memory favorites and history list during the lifetime of the backend process.
+
+\subsection{Operating Environment}
+The system is designed to operate as a web application accessible from any device equipped with a modern web browser, including desktops, laptops, tablets, and mobile devices. The frontend is built and served through Vite during development and bundled as static assets when deployed. The backend runs on Node.js 20 (Alpine Linux base image) and listens on TCP port 5000. The application is expected to function consistently across the latest stable releases of Chrome, Firefox, Safari, and Edge. A stable internet connection is required because all data is fetched live from Open-Meteo.
+
+\subsection{Design Constraints}
+The design and implementation of the system are subject to the following constraints:
+\begin{itemize}
+  \item The frontend must be implemented with React and built using Vite.
+  \item The backend must be implemented with Node.js and the Express framework, using ES modules.
+  \item All weather data must be sourced from the public Open-Meteo API; no paid weather service may be substituted without team approval.
+  \item Both frontend and backend must be containerizable with Docker and orchestrated with Docker Compose.
+  \item Communication between client and server must use JSON over HTTP/HTTPS.
+  \item The deployed application must run on the Render cloud platform on the project's allotted free tier.
+  \item The application must not store personally identifiable information.
+\end{itemize}
+
+%% ============================================================
+\section{External Interface Requirements}
+This section describes the external interfaces between the Group~1 Weather App and its users, the upstream weather service, and the browser/network environment in which it runs.
+
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{| C{0.55in} | L{1.05in} | L{3.4in} | L{1in} |}
+\hline
+\rowcolor{brandNavy}\thead{ID} & \thead{Interface Type} & \thead{Requirement Description} & \thead{Applies To} \\
+\hline
+\endfirsthead
+\hline
+\rowcolor{brandNavy}\thead{ID} & \thead{Interface Type} & \thead{Requirement Description} & \thead{Applies To} \\
+\hline
+\endhead
+ER-01 & User Interface & The system shall provide a single-page responsive layout that adapts to desktop and mobile viewports. & All pages \\ \hline
+\rowcolor{brandRowAlt}ER-02 & User Interface & The system shall provide a prominent search box for entering a city name. & Home / dashboard \\ \hline
+ER-03 & User Interface & The system shall display a current-conditions card with temperature, humidity, wind, and condition. & Dashboard \\ \hline
+\rowcolor{brandRowAlt}ER-04 & User Interface & The system shall display a five-day forecast grid with date, condition, high/low, and precipitation chance. & Dashboard \\ \hline
+ER-05 & User Interface & The system shall display a Favorites panel and a Search History panel side by side beneath the dashboard. & Sidebar \\ \hline
+\rowcolor{brandRowAlt}ER-06 & User Interface & The system shall display clear loading and error states to the user. & All pages \\ \hline
+ER-07 & Software Interface & The system shall use the Open-Meteo geocoding endpoint to resolve a city name to coordinates. & Backend \\ \hline
+\rowcolor{brandRowAlt}ER-08 & Software Interface & The system shall use the Open-Meteo forecast endpoint to retrieve current and daily weather. & Backend \\ \hline
+ER-09 & Software Interface & The backend shall expose REST endpoints under \texttt{/api} for the frontend to consume. & Backend \\ \hline
+\rowcolor{brandRowAlt}ER-10 & Software Interface & The backend shall serve the compiled React bundle for any non-API route. & Backend \\ \hline
+ER-11 & Hardware Interface & The system shall run on any device with a web browser and a keyboard/touch input method. & Client device \\ \hline
+\rowcolor{brandRowAlt}ER-12 & Hardware Interface & The system shall not require any specialized hardware. & Client device \\ \hline
+ER-13 & Communication & The system shall use HTTP/HTTPS for all client--server and server--API communication. & Network \\ \hline
+\rowcolor{brandRowAlt}ER-14 & Communication & The backend shall enable CORS so that the frontend may consume the API during development. & Network \\ \hline
+ER-15 & Communication & All responses shall be returned as \texttt{application/json}. & API \\ \hline
+\end{longtable}
+
+\subsection{User Interfaces}
+The application shall present a single, clean dashboard layout. A hero header introduces the application and contains the search box. Beneath the hero, two cards display the current weather and the five-day forecast side by side. A lower section contains two panels: a Favorites panel that lists saved cities with quick-select buttons and a delete (trash) icon, and a Search History panel that lists the ten most recent searches with timestamps. The interface shall use a soft blue and white palette, rounded card corners, and clearly contrasted call-to-action buttons. The interface shall be fully responsive: at viewport widths below 850 pixels, the dashboard and side sections collapse to a single column.
+
+\subsection{Software Interfaces}
+The system depends on two external endpoints provided by Open-Meteo:
+\begin{itemize}
+  \item \texttt{GET https://geocoding-api.open-meteo.com/v1/search?name=\{city\}\&count=1}
+  \item \texttt{GET https://api.open-meteo.com/v1/forecast?latitude=\{lat\}\&longitude=\{lon\}\&current=...\&daily=...}
+\end{itemize}
+The backend exposes its own internal API that the frontend consumes. The shape of this API is summarized below:
+
+\begin{tabularx}{\linewidth}{| C{0.7in} | L{1.9in} | Y |}
+\hline
+\rowcolor{brandNavy}\thead{Method} & \thead{Path} & \thead{Purpose} \\
+\hline
+\texttt{GET}    & \texttt{/api/weather?city=\{name\}} & Returns the current weather and five-day forecast for the named city. \\ \hline
+\rowcolor{brandRowAlt}\texttt{GET}    & \texttt{/api/history}             & Returns the ten most recent successful city searches. \\ \hline
+\texttt{GET}    & \texttt{/api/favorites}           & Returns the list of saved favorite cities. \\ \hline
+\rowcolor{brandRowAlt}\texttt{POST}   & \texttt{/api/favorites}           & Adds a city (with optional country) to the favorites list. \\ \hline
+\texttt{DELETE} & \texttt{/api/favorites/:city}     & Removes the named city from the favorites list. \\ \hline
+\end{tabularx}
+
+\subsection{Hardware Interfaces}
+The application does not impose any specialized hardware requirements beyond a device capable of running a modern web browser. Both the frontend and backend containers are designed to run on standard Linux servers; the project's deployment target on Render provisions the underlying CPU, memory, and network.
+
+\subsection{Communication Interfaces}
+All communication between the user's browser and the backend, and between the backend and Open-Meteo, occurs over HTTP or HTTPS. Render terminates TLS for the public deployment, so all production traffic from the client to the backend is encrypted. Requests and responses are JSON-encoded. The backend enables CORS through the express \texttt{cors} middleware so that the React development server (port 5173) can call the API server (port 5000) during local development.
+
+%% ============================================================
+\section{Functional Requirements}
+The table below summarizes the functional requirements of the system. Each requirement is mapped to the UI component and the backend route (or React handler) that implements it. The narrative subsections that follow group the requirements into functional areas.
+
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{| C{0.55in} | L{2.9in} | L{1in} | L{1.3in} |}
+\hline
+\rowcolor{brandNavy}\thead{ID} & \thead{Functional Requirement} & \thead{UI Component} & \thead{Function / Route} \\
+\hline
+\endfirsthead
+\hline
+\rowcolor{brandNavy}\thead{ID} & \thead{Functional Requirement} & \thead{UI Component} & \thead{Function / Route} \\
+\hline
+\endhead
+FR-01 & The system shall accept a city name as input through a search form. & Search box (hero) & \texttt{\footnotesize handleSubmit()} \\ \hline
+\rowcolor{brandRowAlt}FR-02 & The system shall validate that the city field is non-empty before issuing a request. & Search box & \texttt{\footnotesize GET /api/weather} \\ \hline
+FR-03 & The system shall geocode the city name to latitude/longitude using Open-Meteo. & Backend & \texttt{\footnotesize GET /api/weather} \\ \hline
+\rowcolor{brandRowAlt}FR-04 & The system shall retrieve current weather and a five-day forecast from Open-Meteo. & Backend & \texttt{\footnotesize GET /api/weather} \\ \hline
+FR-05 & The system shall display the resolved city name, country, condition, temperature, humidity, and wind speed. & Current card & \texttt{\footnotesize App.jsx render} \\ \hline
+\rowcolor{brandRowAlt}FR-06 & The system shall display a five-day forecast grid with date, condition, high, low, and precipitation chance. & Forecast card & \texttt{\footnotesize App.jsx render} \\ \hline
+FR-07 & The system shall allow the user to save the currently displayed city to the favorites list. & Save Favorite button & \texttt{\footnotesize POST /api/favorites} \\ \hline
+\rowcolor{brandRowAlt}FR-08 & The system shall prevent duplicate entries in the favorites list (case-insensitive match). & Backend & \texttt{\footnotesize POST /api/favorites} \\ \hline
+FR-09 & The system shall display all saved favorites and allow one-click re-fetching of any favorite. & Favorites panel & \texttt{\footnotesize GET /api/favorites} \\ \hline
+\rowcolor{brandRowAlt}FR-10 & The system shall allow the user to remove a city from the favorites list. & Trash icon & \texttt{\footnotesize DELETE /api/favorites/:city} \\ \hline
+FR-11 & The system shall record each successful search in a search-history list capped at ten entries. & Backend & \texttt{\footnotesize GET /api/weather} \\ \hline
+\rowcolor{brandRowAlt}FR-12 & The system shall display the search history with the human-readable date/time of each search. & History panel & \texttt{\footnotesize GET /api/history} \\ \hline
+FR-13 & The system shall allow the user to re-fetch the weather for any previously searched city. & History panel & \texttt{\footnotesize fetchWeather()} \\ \hline
+\rowcolor{brandRowAlt}FR-14 & The system shall return HTTP 404 with a meaningful error when the city cannot be found. & Backend & \texttt{\footnotesize GET /api/weather} \\ \hline
+FR-15 & The system shall return HTTP 500 with a meaningful error when the upstream API fails. & Backend & \texttt{\footnotesize GET /api/weather} \\ \hline
+\rowcolor{brandRowAlt}FR-16 & The system shall display all backend errors to the user in a styled error banner. & Error banner & \texttt{\footnotesize App.jsx error state} \\ \hline
+FR-17 & The system shall load the weather for a default city (Los Angeles) on first page load. & Dashboard & \texttt{\footnotesize useEffect()} \\ \hline
+\rowcolor{brandRowAlt}FR-18 & The system shall serve the compiled React app from the backend for non-API routes in production. & Backend & \texttt{\footnotesize app.get("*")} \\ \hline
+\end{longtable}
+
+\subsection{Weather Search Functionality}
+The system shall provide a search box that accepts a free-text city name. When the user submits the form, the frontend shall issue a GET request to \texttt{/api/weather?city=\{name\}}. The backend shall first call the Open-Meteo geocoding endpoint to resolve the city to a single (latitude, longitude) pair, and shall then call the Open-Meteo forecast endpoint to retrieve the current weather and daily forecast. If geocoding fails, the system shall return HTTP 404 with a ``City not found'' message. If any other failure occurs during retrieval, the system shall return HTTP 500 with a ``Failed to fetch weather data'' message.
+
+\subsection{Current Weather Display}
+The system shall display the resolved city name, the country, the textual weather condition (e.g., ``Clear sky'', ``Light drizzle''), the current temperature in degrees Fahrenheit, the current relative humidity as a percentage, and the current wind speed in miles per hour. Numeric values shall be rounded for display. The weather condition is determined by mapping the integer weather code returned by Open-Meteo to a human-readable description using the system's internal weather code table.
+
+\subsection{Five-Day Forecast}
+The system shall display the first five days of the daily forecast returned by Open-Meteo. For each day the system shall display the date (formatted using the user's browser locale), the textual condition, the maximum and minimum temperatures rounded to the nearest degree Fahrenheit, and the maximum precipitation probability as a percentage. When precipitation probability is unavailable, the system shall display zero percent.
+
+\subsection{Favorites Management}
+The system shall maintain a list of favorite cities in server memory. After the user has retrieved the weather for a city, the user shall be able to add that city to the favorites list by selecting the Save Favorite button. The system shall prevent duplicates by comparing the new city name to existing favorites in a case-insensitive manner. The user shall be able to remove a favorite at any time by selecting the trash icon next to it. Selecting a favorite shall re-issue a weather request for that city and refresh the dashboard.
+
+\subsection{Search History}
+The system shall record every successful weather lookup in a search-history list. Each history entry shall include the canonical city name, the country, and the ISO-8601 timestamp of the search. The list shall be capped at the ten most recent entries; older entries shall be discarded. The user shall be able to re-fetch the weather for any city in the history by selecting it.
+
+\subsection{Error Handling}
+The system shall handle three categories of error visibly to the user. (1) When the user submits the search form without a city name, the backend shall reject the request with HTTP 400 and a clear message. (2) When the upstream geocoding service returns no results, the backend shall return HTTP 404 with the message ``City not found''. (3) When any other unexpected error occurs during the request lifecycle, the backend shall return HTTP 500 with the message ``Failed to fetch weather data''. The frontend shall display all error messages in a styled red banner directly beneath the search form and shall preserve any previously displayed forecast until the user issues a new successful search.
+
+%% ============================================================
+\section{Nonfunctional Requirements}
+
+\subsection{Performance}
+The Group~1 Weather App shall provide responsive performance during normal use. A typical \texttt{/api/weather} request shall complete within approximately two seconds under normal network conditions; this includes the time required for the backend to call both the Open-Meteo geocoding and forecast endpoints and to transform the response. The frontend shall remain interactive while requests are in flight and shall display a loading indicator until a response is received.
+
+\subsection{Reliability}
+The system shall handle invalid inputs and upstream failures gracefully. The backend shall validate the presence of the city parameter, shall return appropriate HTTP status codes for distinct failure modes, and shall never expose raw exception traces to the client. Front-end state shall be preserved across failed requests so that an error in one search does not destroy the data from the previous successful search.
+
+\subsection{Usability}
+The interface shall be simple, consistent, and easy to understand. The search form shall be the most prominent control on the page. All clickable elements shall be visibly styled as buttons or icons, and the contrast between text and background shall meet legibility expectations. The interface shall be fully responsive: at viewport widths below 850 pixels, the dashboard, sidebar panels, and forecast grid collapse to single-column layouts to remain readable on phones.
+
+\subsection{Security}
+Although the application does not handle authentication or personally identifiable information, it shall still observe several security practices. All public traffic to the deployed instance shall use HTTPS as terminated by Render. The backend shall enable CORS deliberately rather than implicitly. The backend shall validate user input before forwarding it to Open-Meteo. The backend shall never embed user input directly into log messages without escaping.
+
+\subsection{Maintainability}
+The codebase shall be organized into clearly separated frontend and backend directories, each with its own \texttt{package.json} and Dockerfile. The backend shall use ES modules and shall keep route handlers small and self-contained. The weather-code mapping shall be defined as a single lookup table in the backend so that adding or correcting condition strings requires changing only one location.
+
+\subsection{Portability}
+The application shall be portable across operating systems through Docker. Both services shall build from a \texttt{node:20-alpine} base image. The Docker Compose configuration shall make it possible to start the entire system on any host that has Docker installed with a single command: \texttt{docker compose up -{}-build}.
+
+%% ============================================================
+\section{Data Requirements}
+The Group~1 Weather App does not use a persistent database. All application state is held in server memory for the lifetime of the backend process. Three logical data collections are maintained at runtime, and each is described below.
+
+\subsubsection*{Weather Response (transient)}
+This object is constructed on every \texttt{/api/weather} request and returned to the frontend. It is not persisted on the server.
+\begin{tabularx}{\linewidth}{| L{1.7in} | L{1.5in} | Y |}
+\hline
+\rowcolor{brandNavy}\thead{Field} & \thead{Type} & \thead{Meaning} \\
+\hline
+\texttt{city}                        & String              & Canonical city name returned by Open-Meteo geocoding. \\ \hline
+\rowcolor{brandRowAlt}\texttt{country}                     & String              & Country name returned by Open-Meteo geocoding. \\ \hline
+\texttt{current.temperature}         & Number (°F)         & Current air temperature at 2 meters. \\ \hline
+\rowcolor{brandRowAlt}\texttt{current.humidity}            & Number (\%)         & Current relative humidity at 2 meters. \\ \hline
+\texttt{current.windSpeed}           & Number (mph)        & Current wind speed at 10 meters. \\ \hline
+\rowcolor{brandRowAlt}\texttt{current.condition}           & String              & Human-readable condition mapped from Open-Meteo weather code. \\ \hline
+\texttt{forecast[].date}             & String (YYYY-MM-DD) & Forecast date. \\ \hline
+\rowcolor{brandRowAlt}\texttt{forecast[].maxTemp}          & Number (°F)         & Daily maximum temperature. \\ \hline
+\texttt{forecast[].minTemp}          & Number (°F)         & Daily minimum temperature. \\ \hline
+\rowcolor{brandRowAlt}\texttt{forecast[].precipitation}    & Number (\%)         & Maximum precipitation probability for the day. \\ \hline
+\texttt{forecast[].condition}        & String              & Human-readable condition for the day. \\ \hline
+\end{tabularx}
+
+\subsubsection*{Search History (in-memory, capped at 10)}
+\begin{tabularx}{\linewidth}{| L{1.7in} | L{1.5in} | Y |}
+\hline
+\rowcolor{brandNavy}\thead{Field} & \thead{Type} & \thead{Meaning} \\
+\hline
+\texttt{city}       & String              & Canonical city name recorded after a successful search. \\ \hline
+\rowcolor{brandRowAlt}\texttt{country}    & String              & Country name returned by Open-Meteo geocoding. \\ \hline
+\texttt{searchedAt} & String (ISO-8601)   & Timestamp of the search. \\ \hline
+\end{tabularx}
+
+\subsubsection*{Favorites (in-memory)}
+\begin{tabularx}{\linewidth}{| L{1.7in} | L{1.5in} | Y |}
+\hline
+\rowcolor{brandNavy}\thead{Field} & \thead{Type} & \thead{Meaning} \\
+\hline
+\texttt{city}    & String & Name of the favorited city. Unique within the list (case-insensitive). \\ \hline
+\rowcolor{brandRowAlt}\texttt{country} & String & Country of the favorited city. Defaults to ``Unknown'' when omitted. \\ \hline
+\end{tabularx}
+
+%% ============================================================
+\section{Assumptions and Dependencies}
+The operation of the Group~1 Weather App relies on several key assumptions and external dependencies:
+\begin{itemize}
+  \item Users are assumed to have a stable internet connection and a modern web browser.
+  \item The Open-Meteo geocoding and forecast endpoints are assumed to be available and to return results in the documented JSON shape.
+  \item The Render free-tier deployment is assumed to provide sufficient compute and network bandwidth for a small number of concurrent users.
+  \item Because favorites and history are held in memory, the application assumes that a backend restart (for example, after a deployment) is an acceptable point at which to lose that state.
+  \item The Docker host (or Render runtime) is assumed to have access to outbound HTTPS so that the backend can reach Open-Meteo.
+  \item The application does not assume any specific user locale; date and time formatting are delegated to the user's browser.
+\end{itemize}
+
+%% ============================================================
+\section{Future Enhancements}
+Several future enhancements have been identified to improve the functionality and user experience of the Group~1 Weather App:
+\begin{itemize}
+  \item Persist favorites and search history in a real database (for example, PostgreSQL or MongoDB) so that they survive restarts and are scoped per user.
+  \item Introduce user accounts so that favorites and history can be personalized.
+  \item Add a unit-toggle so that temperatures and wind speeds can be displayed in metric units.
+  \item Integrate a map view (for example, Leaflet) to show the geographic location of the searched city.
+  \item Provide a longer forecast horizon (seven or fourteen days).
+  \item Add hourly forecast charts using Recharts or a similar library.
+  \item Introduce push notifications or email alerts for severe weather in favorited cities.
+  \item Add automated end-to-end testing (for example, Playwright) in addition to the existing TestRail manual test runs.
+  \item Improve accessibility coverage to WCAG~2.1 AA, including keyboard-only navigation and screen-reader labels.
+\end{itemize}
+
+\end{document}
