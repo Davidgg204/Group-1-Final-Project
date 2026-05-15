@@ -1,0 +1,175 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parskip}{0.55em}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{leftmargin=1.4em,itemsep=0.25em}
+\setlist[enumerate]{leftmargin=1.4em,itemsep=0.25em}
+
+\title{Group 1 Weather App\\Design Specification}
+\author{Group 1}
+\date{May 15, 2026}
+
+\begin{document}
+\maketitle
+
+\section{Revision History}
+\textbf{Version 1.0, May 15, 2026.} Design specification prepared from the current frontend, backend, Docker, and API files in the repository.
+
+\section{Purpose}
+This design specification explains what is in the Group 1 Weather App and how the main parts fit together. It is meant to be a practical reference for the project. The user-facing sections, backend routes, data used by the app, dependencies, and Docker requirements are listed in one place.
+
+\section{System Summary}
+The Group 1 Weather App lets a user search for a city and view current weather plus a five-day forecast. The frontend uses React with Vite. The backend uses Node.js with Express. Weather data is requested from the Open-Meteo geocoding and forecast APIs.
+
+Favorites and search history are stored in memory on the backend. Because there is no database, those lists reset when the backend server restarts.
+
+\section{Architecture Overview}
+\textbf{Frontend.} The frontend displays the web interface from \texttt{frontend/src/App.jsx} and applies styles from \texttt{frontend/src/style.css}.
+
+\textbf{Backend.} The backend runs the Express server in \texttt{backend/server.js}. It provides routes for weather lookup, favorites, and search history.
+
+\textbf{External API.} The backend uses Open-Meteo over HTTPS for city lookup and weather forecast data.
+
+\textbf{Temporary Storage.} Favorites and recent searches are kept in JavaScript arrays while the backend process is running.
+
+\textbf{Deployment Files.} The project uses separate Dockerfiles for the frontend and backend. The \texttt{docker-compose.yml} file starts both services together.
+
+\section{Page and Feature Breakdown}
+The app is built as one page. Each section has a specific job.
+
+\textbf{Header area.} Shows the application name and a short line describing the weather search feature.
+
+\textbf{Search form.} Lets the user enter a city name. On submit, it calls \texttt{/api/weather}.
+
+\textbf{Loading message.} Appears while the frontend is waiting for a weather response.
+
+\textbf{Error message.} Shows problems returned by the backend, such as a missing city or failed weather request.
+
+\textbf{Current weather card.} Shows the selected city, country, condition, temperature, humidity, and wind speed.
+
+\textbf{Save favorite button.} Sends the current city and country to the backend favorites route.
+
+\textbf{Forecast card.} Shows five daily forecast entries with date, condition, high temperature, low temperature, and rain chance.
+
+\textbf{Favorites panel.} Lists saved cities. A city button searches that city again. The trash icon removes it from the favorites list.
+
+\textbf{Search history panel.} Lists recent searches from the backend, including the time each search was made.
+
+\section{Backend Routes}
+\textbf{GET \texttt{/api/weather?city=\{name\}}.} Checks the city input, gets coordinates from Open-Meteo, requests forecast data, formats the response, and adds the search to history.
+
+\textbf{GET \texttt{/api/history}.} Returns the current search history list.
+
+\textbf{GET \texttt{/api/favorites}.} Returns the current favorites list.
+
+\textbf{POST \texttt{/api/favorites}.} Adds a city to favorites when it is not already saved.
+
+\textbf{DELETE \texttt{/api/favorites/:city}.} Removes the matching city from favorites.
+
+\textbf{GET \texttt{*}.} Sends back the built frontend file for non-API routes when the app is deployed.
+
+\section{Frontend Design Details}
+The frontend is centered around one React component, \texttt{App}. This keeps the project easy to follow because the state, API calls, and page layout are in the same file.
+
+\begin{itemize}
+\item \texttt{city} holds the city typed by the user or selected from a list.
+\item \texttt{weather} holds the weather response returned by the backend.
+\item \texttt{history} holds the recent search list from \texttt{/api/history}.
+\item \texttt{favorites} holds the saved city list from \texttt{/api/favorites}.
+\item \texttt{error} holds the message shown when a request fails.
+\item \texttt{loading} controls whether the loading message is visible.
+\end{itemize}
+
+The CSS uses flexbox and grid for layout. On smaller screens, the dashboard and side panels switch to one column so the page remains readable on mobile devices.
+
+\section{Backend Design Details}
+The backend is contained in \texttt{backend/server.js}. It handles both the API routes and the deployed frontend files.
+
+\begin{itemize}
+\item Serves the compiled frontend from \texttt{frontend/dist} in deployed mode.
+\item Reads and validates incoming request data.
+\item Calls Open-Meteo geocoding to turn a city name into latitude and longitude.
+\item Calls Open-Meteo forecast to get current weather and daily forecast values.
+\item Maps Open-Meteo weather codes into readable condition names.
+\item Stores favorites and recent searches in memory.
+\item Sends JSON responses back to the React frontend.
+\end{itemize}
+
+This design works for the current project size. The main tradeoff is that favorites and history are temporary because they are not saved to a database or file.
+
+\section{Data Design}
+\textbf{Weather response.} A JSON object with \texttt{city}, \texttt{country}, a \texttt{current} weather object, and a \texttt{forecast} array.
+
+\textbf{Favorite item.} A JSON object with \texttt{city} and \texttt{country}. It is stored in the backend favorites array.
+
+\textbf{History item.} A JSON object with \texttt{city}, \texttt{country}, and \texttt{searchedAt}. It is stored in the backend history array.
+
+\section{Packages, Dependencies, and Libraries}
+\subsection{Frontend}
+\begin{itemize}
+\item \texttt{react}: builds the user interface and manages component state.
+\item \texttt{react-dom}: renders React into the browser.
+\item \texttt{vite}: runs the development server and builds the frontend files.
+\item \texttt{@vitejs/plugin-react}: adds React support to Vite.
+\item \texttt{lucide-react}: provides icons for search, favorite, weather, wind, humidity, and delete actions.
+\end{itemize}
+
+\subsection{Backend}
+\begin{itemize}
+\item \texttt{express}: defines the web server and API routes.
+\item \texttt{cors}: allows frontend requests during development.
+\item \texttt{morgan}: logs HTTP requests in the backend console.
+\item \texttt{nodemon}: restarts the backend automatically during development.
+\end{itemize}
+
+\subsection{External Services and Tools}
+\begin{itemize}
+\item Open-Meteo Geocoding API: resolves a city name into latitude and longitude.
+\item Open-Meteo Forecast API: provides current weather and five-day forecast data.
+\item Docker: creates containers for the frontend and backend.
+\item Docker Compose: starts both containers with one command.
+\item Render: hosts the deployed application.
+\end{itemize}
+
+\section{Docker Container Requirements}
+The project needs the following items to run in Docker:
+
+\begin{itemize}
+\item \texttt{node:20-alpine} as the base image for both containers.
+\item Node.js and npm, included with the base image.
+\item Frontend dependencies installed from \texttt{frontend/package.json}.
+\item Backend dependencies installed from \texttt{backend/package.json}.
+\item Frontend port \texttt{5173} exposed for the Vite server.
+\item Backend port \texttt{5000} exposed for the Express server.
+\item \texttt{docker-compose.yml} to define and start the two services.
+\end{itemize}
+
+The project does not need a database container in its current version.
+
+\section{Project Workflow}
+The main search workflow is:
+
+\begin{enumerate}
+\item The user enters a city in the React interface.
+\item The frontend sends the city to \texttt{/api/weather}.
+\item The backend asks Open-Meteo for city coordinates and weather data.
+\item The backend formats the Open-Meteo response into a smaller JSON object.
+\item The frontend updates the current weather card and forecast card.
+\item If the user saves the city, the frontend sends it to \texttt{/api/favorites}.
+\item The history and favorites panels update from their backend routes.
+\end{enumerate}
+
+\section{Current Limits}
+\begin{itemize}
+\item Favorites and history are lost when the backend restarts.
+\item The app does not have login accounts, so saved cities are shared for the running backend process.
+\item Most frontend logic is in one React component. That is manageable for this project, but larger versions should split the UI into smaller components.
+\item Weather searches depend on Open-Meteo being available.
+\end{itemize}
+
+\end{document}
