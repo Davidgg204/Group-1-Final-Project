@@ -1,0 +1,322 @@
+\documentclass{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+% -------------------------------------------------
+% Section Styling
+\titleformat{\section}
+{\color{blue}\normalfont\Large\bfseries}
+{\thesection}{1em}{}
+
+% -------------------------------------------------
+\title{Group 1 Final Project Weather App}
+\author{Group 1}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+% -------------------------------------------------
+\section{Introduction}
+
+The Group 1 Weather App is a full-stack weather web application that provides users with real-time weather information and a 5-day forecast using the Open-Meteo API. The application was developed using React for the frontend and Node.js with Express for the backend. Docker was used for containerization and Render was used for cloud deployment.
+
+% -------------------------------------------------
+\section{Project Overview}
+
+Group 1 Final Project Weather App is a full-stack weather web application built using React, Node.js, and the Open-Meteo API. The application allows users to search for weather conditions by city, view forecasts, manage favorite locations, and track recent searches through a clean and responsive interface.
+
+% -------------------------------------------------
+\section{Group Members}
+
+\begin{itemize}[leftmargin=*]
+    \item David Gomez
+    \item Enrique Cayetano
+    \item Saw Rustom Dee
+    \item Andres Renteria
+    \item Alejandro Villanueva
+\end{itemize}
+
+% -------------------------------------------------
+\section{Project Goals}
+
+The main goals of this weather application are:
+
+\begin{itemize}[leftmargin=*]
+    \item Provide accurate and real-time weather information
+    \item Allow users to search weather by city
+    \item Display a 5-day weather forecast
+    \item Create a responsive and user-friendly interface
+    \item Store favorite locations for quick access
+    \item Track user search history
+    \item Practice full-stack web development concepts
+\end{itemize}
+
+% -------------------------------------------------
+\section{Purpose of the Project}
+
+Weather applications are commonly used in everyday life to help users plan travel, outdoor activities, and daily schedules. The Group 1 Weather App was created to provide a lightweight and accessible weather platform.
+
+% -------------------------------------------------
+\section{Application Preview}
+
+Below is a preview of the weather application interface.
+
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{WeatherAppScreenshot.png}
+\end{center}
+
+% -------------------------------------------------
+\section{Features}
+
+\begin{itemize}[leftmargin=*]
+    \item Search weather by city
+    \item Display current weather information
+    \item Display 5-day weather forecast
+    \item Save favorite cities
+    \item Remove favorite cities
+    \item Store recent search history
+    \item Responsive user interface
+    \item Real-time weather updates
+\end{itemize}
+
+% -------------------------------------------------
+\section{API Integration}
+
+This application uses the Open-Meteo API to retrieve:
+
+\begin{itemize}[leftmargin=*]
+    \item Current weather conditions
+    \item Temperature forecasts
+    \item Wind speed data
+    \item Humidity information
+    \item Daily forecast updates
+\end{itemize}
+
+% -------------------------------------------------
+\section{System Architecture}
+
+The application follows a full-stack architecture:
+
+\begin{itemize}[leftmargin=*]
+    \item Frontend built with React
+    \item Backend server built using Node.js and Express
+    \item Weather data fetched from Open-Meteo API
+    \item Deployment handled through Render
+\end{itemize}
+
+% -------------------------------------------------
+\section{Technologies Used}
+
+\begin{itemize}[leftmargin=*]
+    \item React
+    \item Vite
+    \item Node.js
+    \item Express.js
+    \item Open-Meteo API
+    \item Docker
+    \item Render
+    \item GitHub
+    \item Jira
+    \item TestRail
+    \item LaTeX
+\end{itemize}
+
+% -------------------------------------------------
+\section{Project Structure}
+
+\begin{verbatim}
+group-1-final-project/
+
+backend/
+    Dockerfile
+    package-lock.json
+    package.json
+    server.js
+
+frontend/
+    src/
+        App.jsx
+        style.css
+
+    Dockerfile
+    index.html
+    package-lock.json
+    package.json
+
+.gitignore
+README.md
+docker-compose.yml
+package.json
+\end{verbatim}
+
+% -------------------------------------------------
+\section{Installation}
+
+Follow these steps to run the project locally:
+
+\begin{enumerate}[leftmargin=*]
+
+    \item Clone the repository:
+
+\begin{verbatim}
+git clone https://github.com/your-username/group-1-final-project.git
+\end{verbatim}
+
+    \item Navigate into the project directory:
+
+\begin{verbatim}
+cd group-1-final-project
+\end{verbatim}
+
+    \item Install dependencies:
+
+\begin{verbatim}
+npm install
+\end{verbatim}
+
+\end{enumerate}
+
+% -------------------------------------------------
+\section{Frontend and Backend Setup}
+
+Open two terminals and run the following commands.
+
+\subsection*{Frontend}
+
+\begin{verbatim}
+cd frontend
+npm install
+npm run dev
+\end{verbatim}
+
+\subsection*{Backend}
+
+\begin{verbatim}
+cd backend
+npm install
+npm start
+\end{verbatim}
+
+% -------------------------------------------------
+\section{Docker Instructions}
+
+The application can also be started using Docker Compose.
+
+\begin{verbatim}
+docker compose up --build
+\end{verbatim}
+
+After the containers start successfully, open:
+
+\begin{verbatim}
+http://localhost:5173
+\end{verbatim}
+
+% -------------------------------------------------
+\section{Project Link}
+
+Access the deployed project here:
+
+\href{https://group-1-final-project.onrender.com}
+{https://group-1-final-project.onrender.com}
+
+% -------------------------------------------------
+\section{Usage}
+
+\begin{itemize}[leftmargin=*]
+    \item Enter a city name in the search bar
+    \item View current weather conditions
+    \item Browse the 5-day forecast
+    \item Save favorite locations
+    \item Review recent search history
+\end{itemize}
+
+% -------------------------------------------------
+\section{Jira Project Management}
+
+Jira was used to organize tasks, assign responsibilities, and track project progress throughout development.
+
+Jira Link:
+
+\href{https://finalgroup1project.atlassian.net/jira/software/projects/KAN/boards/1?atlOrigin=eyJpIjoiYTMzMTdkZGI1ZTZmNGIxMDgxYWJjZjUzMzRmZmE5YmQiLCJwIjoiaiJ9}
+{Jira Project Board}
+
+% -------------------------------------------------
+\section{Testing}
+
+The application was tested using TestRail. Test cases and reports were created for Snapshots 2, 3, and 4, along with final system testing.
+
+Testing included:
+
+\begin{itemize}[leftmargin=*]
+    \item Frontend functionality
+    \item Backend communication
+    \item Deployment validation
+    \item Docker startup testing
+    \item Error handling
+\end{itemize}
+
+% -------------------------------------------------
+\section{Challenges Faced}
+
+During development, the team encountered several challenges:
+
+\begin{itemize}[leftmargin=*]
+    \item Integrating real-time API data
+    \item Managing frontend and backend communication
+    \item Creating responsive layouts
+    \item Handling asynchronous requests
+    \item Managing application state
+\end{itemize}
+
+% -------------------------------------------------
+\section{Learning Outcomes}
+
+Through this project, the team gained experience with:
+
+\begin{itemize}[leftmargin=*]
+    \item Full-stack web development
+    \item REST API integration
+    \item React component architecture
+    \item Backend routing with Express
+    \item Deployment using Render
+    \item Docker containerization
+    \item Team collaboration using Git and GitHub
+    \item Project management using Jira
+    \item Software testing using TestRail
+\end{itemize}
+
+% -------------------------------------------------
+\section{Future Improvements}
+
+Possible future enhancements include:
+
+\begin{itemize}[leftmargin=*]
+    \item Weather maps
+    \item Advanced charts and analytics
+    \item Push notifications
+    \item Additional weather API integrations
+    \item Dark mode support
+    \item GPS-based location detection
+    \item Severe weather alerts
+    \item Multi-language support
+    \item Temperature unit conversion
+    \item User authentication
+\end{itemize}
+
+% -------------------------------------------------
+\section{License}
+
+This project is for educational purposes.
+
+\end{document}
